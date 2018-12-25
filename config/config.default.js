@@ -7,27 +7,33 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1545011164488_5679';
 
   // add your config here
-  config.middleware = ['printDate'];
+  config.middleware = ['adminAuth'];
+
+  config.adminAuth = {
+     match:'/admin'
+  }
+  config.session = {
+    key: 'SESSION_ID',
+    maxAge: 864000,
+    httpOnly: true,
+    encrypt: true,
+    renew: true //延长会话有效期
+  }
 
   config.view = {
     root: [
       path.join(appInfo.baseDir, 'app/view'),
       path.join(appInfo.baseDir, 'path/to/another'),
     ].join(','),
-    defaultViewEngine: 'nunjucks',
+    defaultViewEngine: 'ejs',
     mapping: {
-      '.html': 'nunjucks',
+      '.html': 'ejs',
+      '.nj': 'nunjucks',
     },
   };
-  config.mongo = {
-    client: {
-      host: '127.0.0.1',
-      port: '27017',
-      name: 'egg',
-      user: '',
-      password: '',
-      options: {},
-    },
+  config.mongoose = {
+    url: 'mongodb://127.0.0.1/egg_admin',
+    options: {},
   };
   return config;
 };
