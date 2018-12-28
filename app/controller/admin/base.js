@@ -10,7 +10,8 @@ class BaseController extends Controller {
 
         await this.ctx.render('admin/public/success', {
 
-            redirectUrl: redirectUrl
+            redirectUrl: redirectUrl,
+            text
         });
 
 
@@ -35,6 +36,14 @@ class BaseController extends Controller {
         console.log(this.ctx.session);
         console.log('====================================');
         this.ctx.body = captcha.data;
+
+    }
+    async delete() {
+
+        let model = this.ctx.request.query.model;
+        let id = this.ctx.request.query.id;
+        await this.ctx.model[model].deleteOne({'_id':id});
+        this.ctx.redirect(this.ctx.state.prevPage)
 
     }
 }

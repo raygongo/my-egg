@@ -8,6 +8,7 @@ module.exports = app => {
   router.get('/', controller.home.index);
 
   router.get('/admin/login', controller.admin.login.index);
+  router.get('/admin/delete', controller.admin.base.delete);
   router.post('/admin/doLogin', controller.admin.login.doLogin);
   router.get('/admin/logout', controller.admin.login.logout);
   router.get('/admin/verify', controller.admin.base.verify);
@@ -20,6 +21,8 @@ module.exports = app => {
 
   router.get('/admin/role', controller.admin.role.index);
   router.get('/admin/role/add', controller.admin.role.add);
+  router.post('/admin/role/do_add', controller.admin.role.doAdd);
+  router.post('/admin/role/do_edit', controller.admin.role.doEdit);
   router.get('/admin/role/edit', controller.admin.role.edit);
 
 
