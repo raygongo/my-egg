@@ -30,6 +30,7 @@ module.exports = app => {
         },
         is_super: {
             type: Number,
+            default: 0 // 超级管理员
         }
     });
 
