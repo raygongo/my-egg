@@ -28,13 +28,16 @@ module.exports = app => {
   router.get('/admin/role/add', controller.admin.role.add);
   router.post('/admin/role/do_add', controller.admin.role.doAdd);
   router.post('/admin/role/do_edit', controller.admin.role.doEdit);
+  router.post('/admin/role/do_auth', controller.admin.role.doAuth);
   router.get('/admin/role/edit', controller.admin.role.edit);
+  router.get('/admin/role/auth', controller.admin.role.auth);
 
 
   router.get('/admin/access', controller.admin.access.index);
   router.get('/admin/access/add', controller.admin.access.add);
   router.get('/admin/access/edit', controller.admin.access.edit);
   router.post('/admin/access/do_add', controller.admin.access.doAdd);
+  router.post('/admin/access/do_edit', controller.admin.access.doEdit);
 
 
 };

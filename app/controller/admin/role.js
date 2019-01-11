@@ -1,5 +1,4 @@
 'use strict';
-
 const Controller = require('./base.js');
 
 class RoleController extends Controller {
@@ -23,7 +22,6 @@ class RoleController extends Controller {
   }
   async doAdd() {
 
-    console.log(this.ctx.request.body);
     let body = this.ctx.request.body
     // await this.ctx.render('admin/role/do_add');
 
@@ -47,12 +45,37 @@ class RoleController extends Controller {
     let data = await this.ctx.model.Role.find({
       _id: id
     });
-    console.log(data[0]);
     await this.ctx.render('admin/role/edit', {
       data: data[0]
     });
 
   }
+
+  async auth() {
+    // 获取id 查询对应数据
+    let id = this.ctx.request.query._id;
+    let accessResult = await this.ctx.model.Access.aggregate([{
+        $match: {
+          'module_id': '0'
+        }
+      },
+      {
+        $lookup: {
+          from: 'access',
+          localField: '_id',
+          foreignField: 'module_id',
+          as: 'items'
+        }
+      }
+    ])
+    await this.ctx.render('admin/role/auth', {
+      list: accessResult,
+      role_id: id
+    });
+
+  }
+
+
   async doEdit() {
 
     let body = this.ctx.request.body
@@ -64,6 +87,25 @@ class RoleController extends Controller {
     if (result) {
       await this.success('/admin/role', '编辑角色成功');
     }
+
+  }
+
+  async doAuth() {
+
+    let body = this.ctx.request.body
+    let role_id = this.ctx.request.query.role_id
+    // if (result) {
+    //   await this.success('/admin/role', '编辑角色成功');
+    // }
+    body.access_node.forEach((item) => {
+      let roleAccessData = new this.ctx.model.RoleAccess({
+        role_id: role_id,
+        access_id: item
+      })
+      roleAccessData.save()
+    })
+
+    console.log(body);
 
   }
 

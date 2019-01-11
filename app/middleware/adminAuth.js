@@ -5,7 +5,6 @@ module.exports = (options) => {
         ctx.state.prevPage = ctx.request.headers['referer'];
         // 全局变量 csrf 用于验证 post请求 
         ctx.state.csrf = ctx.csrf;
-        console.log('中间件')
         const pathName = url.parse(ctx.request.url).pathname;
 
         if (ctx.session.userinfo) {
