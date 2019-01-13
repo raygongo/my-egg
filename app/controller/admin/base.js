@@ -7,10 +7,11 @@ class BaseController extends Controller {
     async success(redirectUrl, text) {
 
         // this.ctx.body='成功';
+        let url = redirectUrl ? redirectUrl : this.ctx.request.headers['referer']
 
         await this.ctx.render('admin/public/success', {
 
-            redirectUrl: redirectUrl,
+            redirectUrl: url,
             text
         });
 
@@ -19,7 +20,7 @@ class BaseController extends Controller {
 
     async error(redirectUrl, text) {
 
-        // this.ctx.body='成功';
+        let url = redirectUrl ? redirectUrl : this.ctx.request.headers['referer']
 
         await this.ctx.render('admin/public/error', {
             redirectUrl: redirectUrl,
@@ -42,7 +43,9 @@ class BaseController extends Controller {
 
         let model = this.ctx.request.query.model;
         let id = this.ctx.request.query.id;
-        await this.ctx.model[model].deleteOne({'_id':id});
+        await this.ctx.model[model].deleteOne({
+            '_id': id
+        });
         this.ctx.redirect(this.ctx.state.prevPage)
 
     }
