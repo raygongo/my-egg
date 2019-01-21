@@ -32,9 +32,53 @@ class AdminService extends Service {
             return accessList.includes(urlAccessList[0]._id.toString())
         }
         return false
+    }
+    /**
+     * 获取当前用户角色下 的权限列表
+     * @param 角色id
+     * @returns []
+     */
+    async accessList(roleId) {
+        // 获取所有 权限
+        let accessResult = await this.ctx.model.Access.aggregate([{
+                $match: {
+                    'module_id': '0'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'access',
+                    localField: '_id',
+                    foreignField: 'module_id',
+                    as: 'items'
+                }
+            }
+        ]);
+        // 获取当前角色下拥有的权限 
+        let roleAccess = await this.ctx.model.RoleAccess.find({
+            role_id: roleId
+        });
+        let accessList = [];
+        if (roleAccess.length) {
+            accessList = roleAccess.map(item => item.access_id.toString());
+        }
+        // 遍历模块权限数据 是否被选中
+        accessResult.forEach((accessModule, index) => {
+            // 1.判断 模块id 是否被选中
+            if (accessList.includes(accessModule._id.toString())) {
+                accessResult[index].checked = true;
+            }
+            // 2.判断 子模块列表内 是否被选中
+            if (accessModule.items) {
+                accessModule.items.forEach((item, index) => {
+                    if (accessList.includes(item._id.toString())) {
+                        accessModule.items[index].checked = true;
+                    }
+                })
+            }
+        })
 
-
-
+        return accessResult;
     }
 }
 

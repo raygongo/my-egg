@@ -10,7 +10,7 @@ module.exports = app => {
         action_name: { // 操作名称
             type: String
         },
-        type: { // 节点类型
+        type: { // 节点类型    1模块 2菜单 3操作
             type: Number
         },
         url: {

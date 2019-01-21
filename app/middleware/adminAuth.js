@@ -8,7 +8,13 @@ module.exports = (options) => {
         const pathName = url.parse(ctx.request.url).pathname;
 
         if (ctx.session.userinfo || pathName === '/admin/login' || pathName === '/admin/doLogin' || pathName === '/admin/verify') {
-            ctx.state.userinfo = ctx.session.userinfo;
+            let userinfo = ctx.session.userinfo;
+            ctx.state.userinfo = userinfo
+            console.log(userinfo)
+            if(userinfo && userinfo.role_id){
+                ctx.state.accessList = await ctx.service.admin.accessList(userinfo.role_id);
+            }
+            
             var hasAuth = await ctx.service.admin.auth();
             if (hasAuth) {
                 await next();
