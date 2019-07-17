@@ -49,6 +49,57 @@ class BaseController extends Controller {
         this.ctx.redirect(this.ctx.state.prevPage)
 
     }
+    async changeStatus() {
+        let modelName = this.ctx.request.query.model;
+        let attr = this.ctx.request.query.attr;
+        let id = this.ctx.request.id;
+        if (!modelName && !attr && !id) {
+            this.ctx.body = {
+                "message": '参数有误',
+                'success': false,
+
+            }
+            return
+        }
+        let result = await this.ctx.model[modelName].find({
+            id: id
+        });
+
+        if (!result.length) {
+            this.ctx.body = {
+                "message": '未查询到相关数据',
+                'success': false,
+
+            }
+            return
+        }
+        let json = {}
+        if (result[0][attr] == 1) {
+            json = {
+                [attr]: 0
+            }
+        } else {
+            json = {
+                [attr]: 1
+            }
+        }
+        var updateResult = await this.ctx.model[modelName].updateOne({
+            id
+        }, json);
+        if (updateResult) {
+            this.ctx.body = {
+                "message": '跟新成功',
+                'success': true,
+
+            }
+        } else {
+            this.ctx.body = {
+                "message": '跟新失败',
+                'success': false,
+
+            }
+        }
+    }
 }
 
 module.exports = BaseController;

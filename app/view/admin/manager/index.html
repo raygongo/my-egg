@@ -38,7 +38,7 @@
                             <th>手机</th>
                             <th>邮箱</th>
                             <th>角色</th>
-
+                            <th>状态</th>
                             <th class="text-center">操作</th>
                         </tr>
                     </thead>
@@ -60,7 +60,16 @@
                             <td>
                                 <%=adminResult[i].role[0].title%>
                             </td>
-                            <td class="text-center"> <a href="/admin/manager/edit?_id=<%=adminResult[i]._id%>">修改</a> <a href="/admin/delete?id=<%=adminResult[i]._id%>&model=Admin">删除</a>
+                            <td>
+                                <%if(adminResult[i].status == 1){%>
+                                <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'Admin','status','<%=adminResult[i]._id%>')"
+                                    alt="">
+                                <%}else{%>
+                                <img src="/public/admin/images/no.gif" alt="" onclick="app.changeStatus(this,'Admin','status','<%=adminResult[i]._id%>')">
+                                <%}%>
+                            </td>
+                            <td class="text-center"> <a href="/admin/manager/edit?_id=<%=adminResult[i]._id%>">修改</a>
+                                <a href="/admin/delete?id=<%=adminResult[i]._id%>&model=Admin">删除</a>
                             </td>
                         </tr>
                         <%}%>

@@ -1,0 +1,57 @@
+<%- include ../public/page_header.html %>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <%- include ../public/page_aside.html %>
+
+
+        </div>
+        <div class="col-sm-10">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    轮播图列表
+                </div>
+            </div>
+            <!--
+                列表展示
+            -->
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="th">
+                            <th>图片名称</th>
+                            <th>图片</th>
+                            <th>跳转地址</th>
+                            <th>状态</th>
+
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <%for(var i=0;i<list.length;i++) {%>
+                        <tr>
+                            <td><%=list[i].title%></td>
+                            <td><img  width="80" height="80" src="<%=list[i].focus_img%>"/></td>
+                            <td><%=list[i].link%></td>
+                            <td><%=list[i].status%></td>
+                            <td>
+                                <a href="/admin/focus/edit?_id=<%=list[i]._id%>">编辑</a>
+                                <a href="/admin/delete?id=<%=list[i]._id%>&model=Fcous">删除</a>
+                            </td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
