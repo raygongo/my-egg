@@ -13,6 +13,7 @@ module.exports = app => {
   router.get('/admin/logout', controller.admin.login.logout)
   router.get('/admin/verify', controller.admin.base.verify)
   router.get('/admin/changeStatus', controller.admin.base.changeStatus)
+  router.get('/admin/editNum', controller.admin.base.editNum)
 
   router.get('/admin/manager', controller.admin.manager.index)
   router.get('/admin/manager/add', controller.admin.manager.add)
@@ -40,6 +41,10 @@ module.exports = app => {
   router.post(
     '/admin/focus/do_upload',
     controller.admin.focus.doUpload
+  )
+  router.post(
+    '/admin/focus/do_edit',
+    controller.admin.focus.doEdit
   )
   router.post(
     '/admin/focus/do_multi_upload',

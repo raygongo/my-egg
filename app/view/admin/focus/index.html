@@ -23,21 +23,31 @@
                     <thead>
                         <tr class="th">
                             <th>图片名称</th>
+                            <th>类型</th>
                             <th>图片</th>
                             <th>跳转地址</th>
                             <th>状态</th>
-
+                            <th>排序</th>
                             <th class="text-center">操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
                         <%for(var i=0;i<list.length;i++) {%>
                         <tr>
                             <td><%=list[i].title%></td>
+                            <td>
+                                <%if(list[i].type==1){%>
+                                    网站
+                                <%}else if(list[i].type==2){%>
+                                    APP
+                                <%}else if(list[i].type==3){%>
+                                    小程序
+                                <%}%>
+                            </td>
                             <td><img  width="80" height="80" src="<%=list[i].focus_img%>"/></td>
                             <td><%=list[i].link%></td>
                             <td><%=list[i].status%></td>
+                            <td><span onclick="app.editName(this,'Focus','sort','<%=list[i]._id%>')"><%=list[i].sort%></span></td>
                             <td>
                                 <a href="/admin/focus/edit?_id=<%=list[i]._id%>">编辑</a>
                                 <a href="/admin/delete?id=<%=list[i]._id%>&model=Fcous">删除</a>

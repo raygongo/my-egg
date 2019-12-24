@@ -15,26 +15,38 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive input-form">
-                        <form action="/admin/focus/do_multi_upload?_csrf=<%=csrf%>" enctype="multipart/form-data"
+                        <form action="/admin/focus/do_edit?_csrf=<%=csrf%>" enctype="multipart/form-data"
                             method="post">
+                            <%=data%>
                             <ul>
-                                <li> 图片名称: <input type="text" name="title" /></li>
-                                <li>
-                                    跳转地址: <input type="text" name="url" />
+                                <li ><input type="hidden" name="id" value="<%=data._id%>"></li>
+                                <li> 图片名称: <input type="text" name="title" value="<%=data.title%>"/></li>
+                                <li> 图片类型: 
+                                    <select name="type" id="" >
+                                        <option <%if(data.type==1){%> selected <%}%> value="1">网站</option>
+                                        <option <%if(data.type==2){%> selected <%}%> value="2">app</option>
+                                        <option <%if(data.type==3){%> selected <%}%> value="3">小程序</option>
+                                    </select>
                                 </li>
                                 <li>
-                                    轮播图: <input type="file" name="focus_img" id="">
+                                    跳转地址: <input type="text" name="link" value="<%=data.link%>"/>
                                 </li>
+                               
                                 <li>
                                     排  序: <input type="text" name="sort" id="">
                                 </li>
                                 <li>
-                                    状态: <input type="radio" name="status" value="1" id="">显示
+                                    状态: <input type="radio" name="status" value="1" id="" checked>显示
                                     <input type="radio" name="status" value="0" id="">隐藏
                                 </li>
                                 <li>
+                                    轮播图: <input type="file" name="focus_img" id="" value="<%=data.focus_img%>">
+                                    <br/>
+                                    <img src="<%=data.focus_img%>" alt="" srcset="">
+                                </li>
+                                <li>
                                     <br />
-                                    <button type="submit" class="btn btn-primary">提交</button>
+                                    <button type="submit" class="btn btn-primary" >提交</button>
                                 </li>
 
                             </ul>

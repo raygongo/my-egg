@@ -100,6 +100,60 @@ class BaseController extends Controller {
             }
         }
     }
+    async editNum() {
+        let modelName = this.ctx.request.query.model;
+        let attr = this.ctx.request.query.attr;
+        let num = this.ctx.request.query.num;
+        let id = this.ctx.request.query.id;
+        console.log(`全局修改num;modelName${modelName}->attr${attr}->num${num}->id${id}`)
+        if (!modelName && !attr && !id) {
+            this.ctx.body = {
+                "message": '参数有误',
+                'success': false,
+
+            }
+            return
+        }
+        let result = await this.ctx.model[modelName].find({
+            id: id
+        });
+
+        if (!result.length) {
+            this.ctx.body = {
+                "message": '未查询到相关数据',
+                'success': false,
+
+            }
+            return
+        }
+        let json = {}
+        // if (result[0][attr] == 1) {
+        //     json = {
+        //         [attr]: 0
+        //     }
+        // } else {
+        //     json = {
+        //         [attr]: 1
+        //     }
+        // }
+        json[attr] = num;
+        var updateResult = await this.ctx.model[modelName].updateOne({
+            id
+        }, json);
+        if (updateResult) {
+            this.ctx.body = {
+                "message": '跟新成功',
+                'success': true,
+
+            }
+        } else {
+            this.ctx.body = {
+                "message": '跟新失败',
+                'success': false,
+
+            }
+        }
+    }
 }
 
 module.exports = BaseController;
