@@ -22,3 +22,9 @@ exports.mysql = {
   enable: false,
   package: 'egg-mysql'
 }
+
+// {app_root}/config/plugin.js
+exports.cors = {
+  enable: true,
+  package: 'egg-cors',
+};

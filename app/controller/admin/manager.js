@@ -17,7 +17,7 @@ class ManagerController extends Controller {
     console.log(JSON.stringify(adminResult));
     // await this.success();
     await this.ctx.render('admin/manager/index', {
-      adminResult
+      adminResult 
     });
 
   }

@@ -25,7 +25,9 @@ class LoginController extends Controller {
     let username = body.username;
     let password = await this.service.tools.md5(body.password);
     console.log(password);
+    console.log(this.ctx.model);
     if (body.verify.toUpperCase() == this.ctx.session.code.toUpperCase()) {
+
       let result = await this.ctx.model.Admin.find({
         "username": username,
         "password": password

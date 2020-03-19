@@ -58,7 +58,7 @@
                                 <%=adminResult[i].email%>
                             </td>
                             <td>
-                                <%=adminResult[i].role[0].title%>
+                                <%=adminResult[i].role[0] ?adminResult[i].role[0].title : ''%>
                             </td>
                             <td>
                                 <%if(adminResult[i].status == 1){%>

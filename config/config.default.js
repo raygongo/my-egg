@@ -8,10 +8,13 @@ module.exports = appInfo => {
 
   config.uploadDir = 'app/public/admin/upload/'
   // add your config here
-  config.middleware = ['adminAuth']
+  config.middleware = ['adminAuth', 'authToken']
 
   config.adminAuth = {
     match: '/admin'
+  }
+  config.authToken = {
+    match: '/api'
   }
   config.session = {
     key: 'SESSION_ID',
@@ -20,7 +23,20 @@ module.exports = appInfo => {
     encrypt: true,
     renew: true //延长会话有效期
   }
-
+  config.security = {
+    csrf: false
+    // {
+    //   type: 'ctoken',             // can be ctoken or referer or all, default to ctoken
+    //   useSession: false,          // if useSession set to true, the secret will keep in session instead of cookie
+    //   ignoreJSON: false,          // skip check JSON requests if ignoreJSON set to true
+    //   cookieName: 'csrfToken',    // csrf token's cookie name
+    //   sessionName: 'csrfToken',   // csrf token's session name
+    //   headerName: 'x-csrf-token', // request csrf token's name in header
+    //   bodyName: '_csrf',          // request csrf token's name in body
+    //   queryName: '_csrf',         // request csrf token's name in query
+    //   refererWhiteList: [],       // referer white list
+    // },
+  }
   config.view = {
     root: [
       path.join(appInfo.baseDir, 'app/view'),
